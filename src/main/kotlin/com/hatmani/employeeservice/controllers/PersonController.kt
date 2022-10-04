@@ -6,6 +6,8 @@ import com.hatmani.employeeservice.dto.AddPersonrequest
 import com.hatmani.employeeservice.dto.PersonResponse
 import com.hatmani.employeeservice.dto.UpdatePersonRequest
 import com.hatmani.employeeservice.services.PersonManagmentservice
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,8 +22,8 @@ class PersonController(private val personservice: PersonManagmentservice) : Pers
     }
 
     @GetMapping
-    override fun findAll(): ResponseEntity<List<PersonResponse>> {
-        return ResponseEntity.ok(personservice.findAll())
+    override fun findAll(pageable: Pageable): ResponseEntity<Page<PersonResponse>> {
+        return ResponseEntity.ok(personservice.findAll(pageable))
     }
 
     @PostMapping

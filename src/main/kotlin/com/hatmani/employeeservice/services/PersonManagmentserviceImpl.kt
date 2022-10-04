@@ -7,6 +7,8 @@ import com.hatmani.employeeservice.entity.Person
 import com.hatmani.employeeservice.repository.PersonRepository
 import com.hatmani.employeeservice.utils.AddPersonRequestTransformer
 import com.hatmani.employeeservice.utils.toPersonResponse
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -27,7 +29,8 @@ class PersonManagmentserviceImpl(
     }
 
 
-    override fun findAll(): List<PersonResponse> = this.personrepository.findAll().map { p -> p.toPersonResponse() }
+    override fun findAll(pageable: Pageable): Page<PersonResponse> =
+        this.personrepository.findAll(pageable).map { p -> p.toPersonResponse() }
 
     override fun save(person: AddPersonrequest): PersonResponse {
         return this.saveorupdate(addPersonRequestTransformer.transform(person)).toPersonResponse()
