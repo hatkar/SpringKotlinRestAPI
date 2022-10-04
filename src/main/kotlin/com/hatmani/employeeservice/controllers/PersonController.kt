@@ -31,7 +31,7 @@ class PersonController(private val personservice: PersonManagmentservice) : Pers
             .body(personCreated)
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     override fun update(
         @PathVariable id: Long,
         @RequestBody person: UpdatePersonRequest
@@ -39,7 +39,7 @@ class PersonController(private val personservice: PersonManagmentservice) : Pers
         return ResponseEntity.ok().body(personservice.update(id, person))
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     override fun deleteById(@PathVariable id: Long): ResponseEntity<Unit> {
         personservice.deleteById(id)
         return ResponseEntity.noContent().build()
