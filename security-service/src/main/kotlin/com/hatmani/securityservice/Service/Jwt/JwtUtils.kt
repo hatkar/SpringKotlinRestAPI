@@ -1,12 +1,10 @@
-package com.hatmani.securityservice.v2.service
+package com.hatmani.securityservice.Service.Jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.*
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.authentication.CredentialsExpiredException
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
-import sun.jvm.hotspot.HelloWorld.e
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -21,7 +19,7 @@ class JwtUtils {
     private var jwtExpirationInMs:Int = 1000000
     public fun generateJwtToken(authentication:Authentication):String
     {
-        var userPrincipal:UserDetailsImpl= authentication.principal as UserDetailsImpl
+        var userPrincipal: UserDetailsImpl = authentication.principal as UserDetailsImpl
         var now :Date= Date()
         var expir:Date = Date(now.time+jwtExpirationInMs)
         return  Jwts.builder()

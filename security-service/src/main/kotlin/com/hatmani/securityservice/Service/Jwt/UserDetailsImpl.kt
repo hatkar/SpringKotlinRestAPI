@@ -1,4 +1,4 @@
-package com.hatmani.securityservice.v2.service
+package com.hatmani.securityservice.Service.Jwt
 
 import com.hatmani.securityservice.Entity.User
 import org.springframework.security.core.GrantedAuthority

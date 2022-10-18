@@ -1,15 +1,17 @@
 package com.hatmani.securityservice.Entity
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
+
+
 @Entity
 open class User(
-    var firstName: String = "",
-    var lastName: String = "",
-    var userName: String = "",
+    var firstname: String = "",
+    var lastname: String = "",
+    var username: String = "",
     var email: String = "",
-    var passWord: String = ""){
+    var password: String = ""){
 
 
     @Id
@@ -20,26 +22,44 @@ open class User(
     var accountNonExpired: Boolean = true
     var accountNonLocked: Boolean = true
     var credentialsNonExpired: Boolean = true
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name="users_roles",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name="role_id")]
+   /* @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(
+        name="users_roles"
+    //    joinColumns = [JoinColumn(name = "user_id")],
+      //  inverseJoinColumns = [JoinColumn(name="role_id")]
     )
 
-    var roles: MutableList<Role> = mutableListOf()
+    lateinit var role: Role*/
 
-    constructor(user: User) : this(user.firstName, user.lastName, user.userName, user.email, user.passWord){
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_role")
+     var role: Role? = null
+
+    constructor(user: User) : this(user.firstname, user.lastname, user.username, user.email, user.password){
         id = user.id
-        firstName = user.firstName
-        lastName = user.lastName
-        userName = user.userName
+        firstname = user.firstname
+        lastname = user.lastname
+        username = user.username
         email = user.email
-        passWord = user.passWord
+        password = user.password
         accountNonExpired = user.accountNonExpired
         accountNonLocked = user.accountNonLocked
         credentialsNonExpired = user.credentialsNonExpired
         enabled = user.enabled
-        roles = user.roles
+        role = user.role
     }
+
+    override fun toString(): String {
+        println("*====>"+firstname)
+        println("*====>"+lastname)
+        println("*====>"+username)
+        println("*====>"+email)
+        println("*====>"+password)
+        if (!this.username.isNullOrEmpty())
+        return "User(firstname='$firstname', lastname='$lastname', username='$username', email='$email', password='$password')"
+        else
+            return "NULL USER"
+    }
+
 }

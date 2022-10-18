@@ -1,4 +1,4 @@
-package com.hatmani.securityservice.v2.payload
+package com.hatmani.securityservice.dto
 
 class LoginRequest(var username:String,var password:String) {
 }

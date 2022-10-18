@@ -1,4 +1,4 @@
-package com.hatmani.securityservice.v2.payload.dto
+package com.hatmani.securityservice.dto
 
 class JwtResponse(
     var token:String="",

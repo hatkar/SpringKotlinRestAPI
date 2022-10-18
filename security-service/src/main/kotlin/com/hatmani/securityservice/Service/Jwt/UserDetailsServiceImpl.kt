@@ -1,9 +1,8 @@
-package com.hatmani.securityservice.v2.service
+package com.hatmani.securityservice.Service.Jwt
 
 import com.hatmani.securityservice.Entity.User
 import com.hatmani.securityservice.Repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 

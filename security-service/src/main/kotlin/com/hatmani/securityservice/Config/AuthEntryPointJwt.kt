@@ -1,4 +1,4 @@
-package com.hatmani.securityservice.v2.service
+package com.hatmani.securityservice.Config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.ietf.jgss.GSSException.UNAUTHORIZED

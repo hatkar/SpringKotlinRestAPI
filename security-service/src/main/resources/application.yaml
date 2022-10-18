@@ -4,7 +4,7 @@ spring:
       enabled: always
   datasource:
     url: jdbc:h2:file:./kotlin-tuto/db-user
-    data-username: sa
+    username: sa
     password: sa
   jpa:
     hibernate:

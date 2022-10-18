@@ -1,7 +1,6 @@
-package com.hatmani.securityservice.v2.payload.dto
+package com.hatmani.securityservice.dto
 
 import com.hatmani.securityservice.Entity.User
-import com.hatmani.securityservice.v2.payload.SignupRequest
 
 fun SignupRequest?.toUser():User{
     return User(firstname= this?.firstname ?: "",

@@ -1,4 +1,4 @@
-package com.hatmani.securityservice.v2.payload
+package com.hatmani.securityservice.dto
 
 class SignupRequest(var firstname: String = "",
                     var lastname: String = "",

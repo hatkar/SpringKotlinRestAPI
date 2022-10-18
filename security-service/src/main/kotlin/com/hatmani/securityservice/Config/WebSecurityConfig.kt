@@ -1,14 +1,14 @@
-package com.hatmani.securityservice.v2.service
+package com.hatmani.securityservice.Config
 
 
+import com.hatmani.securityservice.Config.AuthTokenFilter
+import com.hatmani.securityservice.Service.Jwt.CustomAccessDeniedHandler
+import com.hatmani.securityservice.Service.Jwt.UserDetailsServiceImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.ProviderManager
-import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -23,8 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
     prePostEnabled=true)
-class WebSecurityConfig(private val userDetailsService:UserDetailsServiceImpl,
-                        private val unauthorizedHandler:AuthEntryPointJwt,
+class WebSecurityConfig(private val userDetailsService: UserDetailsServiceImpl,
+                        private val unauthorizedHandler: AuthEntryPointJwt,
                         private val jwtAuthenticationFilter: AuthTokenFilter,
                         private val accesDenid : CustomAccessDeniedHandler
 ) {
