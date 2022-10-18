@@ -1,42 +1,52 @@
-package com.hatmani.securityservice.Service
+package com.hatmani.securityservice.v2.service
 
 import com.hatmani.securityservice.Entity.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import java.util.stream.Collectors
 
-//ici on va cree UserDetail a partir de User
-class CustomUserDetails : User, UserDetails {
-    constructor(user: User) : super(user)
+
+class UserDetailsImpl() : UserDetails {
+    var user=User("","","","","")
+
+    constructor(userdb:User):this()
+    {user=userdb
+
+
+    }
+
+
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return roles.stream().map { role -> SimpleGrantedAuthority(role.toString()) }
-            .collect(Collectors.toList())
 
+       return mutableListOf(SimpleGrantedAuthority(user.role?.role ?: "NONE"))
     }
 
     override fun getPassword(): String {
-        return super.passWord!!
+        println("!!!!!*-*-*-*-*-*-*-*-*--*-*-*-*-!!!!")
+       println(user.username)
+        println(user.password)
+        return user.password
     }
 
     override fun getUsername(): String {
-        return super.userName!!
+        return user.username
     }
 
+
     override fun isAccountNonExpired(): Boolean {
-        return super.accountNonExpired
+        return true
     }
 
     override fun isAccountNonLocked(): Boolean {
-        return super.accountNonLocked
+        return true
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        return super.credentialsNonExpired
+        return true
     }
 
     override fun isEnabled(): Boolean {
-        return super.enabled
+        return true
     }
 }
