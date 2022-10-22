@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -21,30 +22,36 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
-//je desactive ce class WebSecurityConfig et je deminuer la version de spring boot
+//je desactive le class WebSecurityConfig et je deminuer la version de spring boot
 //car je doit utilise WebSecurityConfigurerAdapter
 //car la version de intellij 2021.1 present une beug ou elle signale quelle
 //n'a pas trouve le bean httpSecurity
 //d'ou cette bug a ete corrige dans les version suivant que je peut pas l'avoir
 //https://youtrack.jetbrains.com/issue/IDEA-296926/Spring-Boot-HttpSecurity-bean-not-detected-by-IDE
-//en cas ou vous avez la version superieur que moi vou pouvez activez ce class
+//en cas ou vous avez la version superieur que moi vou pouvez
 //veuillez augmenter la version de spring boot Spring Boot 2.7.0 or newer
-//activer le class ErrorHandlerressource
-//desactiver ou supprimer WebSecurityConfigadp
-//et activer ce class
-/*
+//>>>activer le class ErrorHandlerressource
+//>>>desactiver ou supprimer ce class WebSecurityConfigadp
+//>>> activer le class WebSecurityConfig
+@Deprecated("Deprecated Class veuillez lire les note dans WebSecurityConfig")
 @Configuration
 @EnableWebSecurity
 
 @EnableGlobalMethodSecurity(
     prePostEnabled=true)
-class WebSecurityConfig(private val userDetailsService: UserDetailsServiceImpl,
-                        private val unauthorizedHandler: AuthEntryPointJwt,
-                        private val jwtAuthenticationFilter: AuthTokenFilter,
-                        private val accesDenid : CustomAccessDeniedHandler
+class WebSecurityConfigadp(private val userDetailsService: UserDetailsServiceImpl,
+                           private val unauthorizedHandler: AuthEntryPointJwt,
+                           private val jwtAuthenticationFilter: AuthTokenFilter,
+                           private val accesDenid : CustomAccessDeniedHandler
 
 
-) {
+): WebSecurityConfigurerAdapter() {
+
+
+
+
+
+    //***********//
     @Bean
     fun passwordEncoder(): PasswordEncoder? {
         return BCryptPasswordEncoder()
@@ -58,36 +65,40 @@ class WebSecurityConfig(private val userDetailsService: UserDetailsServiceImpl,
         return authConfig.authenticationManager
     }
 
-
-    @Bean
     @Throws(java.lang.Exception::class)
-     fun configure(http: HttpSecurity): SecurityFilterChain {
+    override fun configure(http: HttpSecurity?) {
 
 
 
-        http.cors().and().csrf().disable()
-            .authorizeRequests().antMatchers("/authapi/**").permitAll()
-            .antMatchers("/auth/**").permitAll()
-            .antMatchers("/protected/**").authenticated()
-            .antMatchers("/h2-console").permitAll()
-            .and()
+        if (http != null) {
+            http.cors().and().csrf().disable()
+                .authorizeRequests().antMatchers("/authapi/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/protected/**").authenticated()
+                .antMatchers("/h2-console").permitAll()
+                .and()
 
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-            .accessDeniedHandler(accesDenid)
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .accessDeniedHandler(accesDenid)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-            .and()
+                .and()
+        }
 
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
-    http.getSharedObject(AuthenticationManagerBuilder::class.java)
-        .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())//.authenticationManager(authenticationManager)
+        if (http != null) {
+            http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+        }
+        if (http != null) {
+            http.getSharedObject(AuthenticationManagerBuilder::class.java)
+                .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
+        }
 
-        http.headers().frameOptions().disable()
+        if (http != null) {
+            http.headers().frameOptions().disable()
+        }
 
-    return http.build()
+
     }
 }
-
- */

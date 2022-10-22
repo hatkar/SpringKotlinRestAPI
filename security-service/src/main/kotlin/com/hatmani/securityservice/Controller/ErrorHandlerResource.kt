@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.time.LocalDateTime
-@ControllerAdvice
+//@ControllerAdvice
 class ErrorHandlerResource {
     @ExceptionHandler(RuntimeException::class)
     fun handleIllegalState(ex:RuntimeException): ResponseEntity<ErrorResponse> {

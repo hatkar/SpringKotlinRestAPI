@@ -47,22 +47,22 @@ class JwtUtils {
                 .parseClaimsJws(authToken)
             return true
         }catch (ex: SignatureException){
-            println("SIGNATURE EXCEPTION"+ex)
+            println("SIGNATURE EXCEPTION")
             senderror(response, ex)
             //SignatureException
         }catch (ex: MalformedJwtException){
-            println("MalformedJwtException EXCEPTION"+ex)
+            println("MalformedJwtException EXCEPTION")
             senderror(response, ex)
         }catch (ex: ExpiredJwtException){
-            println("ExpiredJwtException EXCEPTION "+ex)
+            println("ExpiredJwtException EXCEPTION ")
             senderror(response, ex)
 
 
         }catch (ex: UnsupportedJwtException){
-            println("UnsupportedJwtException EXCEPTION"+ex)
+            println("UnsupportedJwtException EXCEPTION")
             senderror(response, ex)
         }catch (ex:IllegalArgumentException){
-            println("IllegalArgumentException EXCEPTION"+ex)
+            println("IllegalArgumentException EXCEPTION")
             senderror(response, ex)
         }
 
